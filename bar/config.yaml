@@ -1,10 +1,11 @@
-name: app2
-
 repository: registry-1.docker.io/bitnamicharts
 chart: nginx
+version: 15.0.1
 
-namespace: app2
+namespace: bar
 
 destinations:
   - cluster: https://kubernetes.default.svc
-    version: 14.2.2
+    name: bar-sk
+  - cluster: https://kubernetes.default.svc
+    name: bar-bg
