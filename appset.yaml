@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+  - matrix:
+      generators:
+      - git:
+          repoURL: https://github.com/dzibma/argocd-demo
+          revision: HEAD
+          files:
+          - path: ./*/config.yaml
+      - list:
+          elements: []
+          elementsYaml: "{{ .destinations | toJson }}"
+  template:
+    metadata:
+      name: '{{ .name }}'
+    spec:
+      project: default
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+      sources:
+        - chart: '{{ .chart }}'
+          repoURL: '{{ .repository }}'
+          targetRevision: '{{ .version }}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ .namespace }}'
