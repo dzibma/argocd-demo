@@ -15,7 +15,7 @@ spec:
           - path: ./*/config.yaml
       - list:
           elements: []
-          elementsYaml: "{{ .destinations | toJson }}"
+          elementsYaml: "{{ .apps | toJson }}"
   template:
     metadata:
       name: '{{ .name }}'

@@ -6,5 +6,5 @@ version: 15.0.0
 
 namespace: gps
 
-destinations:
+apps:
   - cluster: https://kubernetes.default.svc
