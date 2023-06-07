@@ -8,3 +8,4 @@ namespace: k3w
 
 destinations:
   - cluster: https://kubernetes.default.svc
+    valueFile: values/cz.yaml

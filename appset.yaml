@@ -38,7 +38,7 @@ spec:
           targetRevision: '{{ .version }}'
           helm:
             valueFiles:
-              - $values/{{ path }}/values.yaml
+              - $values/{{ .path.path }}/{{ default "values.yaml" .valueFile }}
         - repoURL: https://github.com/dzibma/argocd-demo
           targetRevision: main
           ref: values
