@@ -23,13 +23,16 @@ spec:
       project: default
       syncPolicy:
         automated:
+          prune: true
           selfHeal: true
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
+          - PrunePropagationPolicy=foreground
+          - PruneLast=true
       sources:
         - chart: '{{ .chart }}'
           repoURL: '{{ .repository }}'
-          targetRevision: '{{ .versionOverride | default .version }}'
+          targetRevision: '{{ .version }}'
       destination:
-        server: https://kubernetes.default.svc
+        server: '{{ .cluster }}'
         namespace: '{{ .namespace }}'
