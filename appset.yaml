@@ -10,7 +10,7 @@ spec:
       generators:
       - git:
           repoURL: https://github.com/dzibma/argocd-demo
-          revision: HEAD
+          revision: main
           files:
           - path: ./*/config.yaml
       - list:
@@ -29,10 +29,16 @@ spec:
           - CreateNamespace=true
           - PrunePropagationPolicy=foreground
           - PruneLast=true
-      sources:
-        - chart: '{{ .chart }}'
-          repoURL: '{{ .repository }}'
-          targetRevision: '{{ .version }}'
       destination:
         server: '{{ .cluster }}'
         namespace: '{{ .namespace }}'
+      sources:
+        - repoURL: '{{ .repository }}'
+          chart: '{{ .chart }}'
+          targetRevision: '{{ .version }}'
+          helm:
+            valueFiles:
+              - $values/{{ path }}/values.yaml
+        - repoURL: https://github.com/dzibma/argocd-demo
+          targetRevision: main
+          ref: values

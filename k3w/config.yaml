@@ -1,10 +1,10 @@
-name: foo
+name: k3w
 
 repository: registry-1.docker.io/bitnamicharts
 chart: nginx
 version: 15.0.1
 
-namespace: foo
+namespace: k3w
 
 destinations:
   - cluster: https://kubernetes.default.svc
