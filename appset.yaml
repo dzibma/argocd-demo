@@ -29,7 +29,7 @@ spec:
       sources:
         - chart: '{{ .chart }}'
           repoURL: '{{ .repository }}'
-          targetRevision: '{{ .version }}'
+          targetRevision: '{{ .versionOverride | default .version }}'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{ .namespace }}'

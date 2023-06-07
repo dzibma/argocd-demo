@@ -1,0 +1,11 @@
+name: app2
+
+repository: registry-1.docker.io/bitnamicharts
+chart: nginx
+version: 15.0.1
+
+namespace: app2
+
+destinations:
+  - cluster: https://kubernetes.default.svc
+    versionOverride: 14.2.2
