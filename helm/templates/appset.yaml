@@ -1,7 +1,8 @@
+{{- $name := (.Release.Name | trunc 63 | trimSuffix "-") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: demo
+  name: {{ $name }}
   namespace: argocd
 spec:
   generators:
@@ -14,25 +15,25 @@ spec:
               revision: main
           - list:
               elements: []
-              elementsYaml: '{{ .apps | toJson }}'
+              elementsYaml: '{{`{{ .apps | toJson }}`}}'
   goTemplate: true
   template:
     metadata:
       finalizers:
         - resources-finalizer.argocd.argoproj.io
-      name: 'demo-{{ .name }}'
+      name: '{{ $name }}-{{`{{ .name }}`}}'
     spec:
       destination:
-        namespace: 'demo-{{ .namespace }}'
-        server: '{{ .cluster }}'
+        namespace: '{{ $name }}-{{`{{ .namespace }}`}}'
+        server: '{{`{{ .cluster }}`}}'
       project: default
       sources:
-        - chart: '{{ .chart }}'
+        - chart: '{{`{{ .chart }}`}}'
           helm:
             valueFiles:
-              - '$values/{{ .path.path }}/{{ default "values.yaml" .valueFile }}'
-          repoURL: '{{ .repository }}'
-          targetRevision: '{{ .version }}'
+              - '{{`$values/{{ .path.path }}/{{ default "values.yaml" .valueFile }}`}}'
+          repoURL: '{{`{{ .repository }}`}}'
+          targetRevision: '{{`{{ .version }}`}}'
         - ref: values
           repoURL: https://github.com/dzibma/argocd-demo
           targetRevision: main

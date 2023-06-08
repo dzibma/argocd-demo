@@ -1,0 +1,5 @@
+apiVersion: v2
+name: eoc
+description: EOC applications set
+type: application
+version: 0.1.0

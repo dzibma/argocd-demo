@@ -3,20 +3,17 @@ kind: Application
 metadata:
   name: sync
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
   project: default
   source:
+    repoURL: https://github.com/dzibma/argocd-demo
+    path: ./
+    targetRevision: main
     directory:
       include: appset.yaml
-      recurse: false
-    path: ./
-    repoURL: https://github.com/dzibma/argocd-demo
-    targetRevision: main
   syncPolicy:
     automated:
       prune: true
