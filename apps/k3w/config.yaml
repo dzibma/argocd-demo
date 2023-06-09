@@ -2,12 +2,8 @@ repository: registry-1.docker.io/bitnamicharts
 chart: nginx
 version: 15.0.1
 
-namespace: k3w
-
-apps:
-  - name: k3w-cz
+components:
+  - name: cz
     cluster: https://kubernetes.default.svc
-    valueFile: values/cz.yaml
-  - name: k3w-sk
+  - name: sk
     cluster: https://kubernetes.default.svc
-    valueFile: values/sk.yaml

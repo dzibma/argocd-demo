@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: demo
+  name: prod
   namespace: argocd
 spec:
   generators:
@@ -14,23 +14,26 @@ spec:
               revision: main
           - list:
               elements: []
-              elementsYaml: '{{ .apps | toJson }}'
+              elementsYaml: '{{ (empty .components) | ternary "[{}]" (.components | toJson) }}'
   goTemplate: true
   template:
     metadata:
       finalizers:
         - resources-finalizer.argocd.argoproj.io
-      name: 'demo-{{ .name }}'
+      name: 'prod-{{ printf "%s-%s" .path.basename .name }}'
+      labels:
+        app.kubernetes.io/instance: prod
     spec:
       destination:
-        namespace: 'demo-{{ .namespace }}'
+        namespace: '{{ .namespace | default .path.basename }}'
         server: '{{ .cluster }}'
       project: default
       sources:
         - chart: '{{ .chart }}'
           helm:
             valueFiles:
-              - '$values/{{ .path.path }}/{{ default "values.yaml" .valueFile }}'
+              - '$values/values.yaml'
+              - '$values/{{ .path.path }}/{{ .values | default (printf "values/%s.yaml" .name) }}'
           repoURL: '{{ .repository }}'
           targetRevision: '{{ .version }}'
         - ref: values

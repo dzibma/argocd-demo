@@ -13,7 +13,7 @@ spec:
     path: ./
     targetRevision: main
     directory:
-      include: appset.yaml
+      include: '*appset.yaml'
   syncPolicy:
     automated:
       prune: true
