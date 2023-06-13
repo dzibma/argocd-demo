@@ -1,0 +1,9 @@
+repository: registry-1.docker.io/bitnamicharts
+chart: nginx
+version: 15.0.1
+
+components:
+  - name: cz
+    cluster: https://kubernetes.default.svc
+  - name: sk
+    cluster: https://kubernetes.default.svc
